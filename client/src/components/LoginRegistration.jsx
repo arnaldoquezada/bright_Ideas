@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, Col, Row, Button, Form } from 'react-bootstrap'
 import '../styles/loginStyles.scss'
 
 const LoginRegistration = () => {
+
+    const initialState = {
+        name: "",
+        alias: "",
+        email: "",
+        password: "",
+        confirmPassword: "",       
+      };
+
+      const [userForm , setUserForm] = useState(initialState);
 
     return (
         <div>
