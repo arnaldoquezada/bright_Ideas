@@ -7,10 +7,10 @@ const Nav = () => {
 
     return (
         <div>
-            <Navbar expand="lg" variant="light" bg="light">
+            <Navbar>
                 <Container>
-                    <Navbar.Brand>
-                        <Link to="/">
+                    <Navbar.Brand >
+                    <Link to="/">
                             Inicio
                         </Link>
                     </Navbar.Brand>
@@ -19,8 +19,14 @@ const Nav = () => {
                             Ideas
                         </Link>
                     </Navbar.Brand>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                        <Navbar.Text>
+                            Bienvenido: <a href="#login">Arnaldo</a>
+                        </Navbar.Text>
+                    </Navbar.Collapse>
                 </Container>
-            </Navbar>
+            </Navbar>           
         </div>
     )
 }

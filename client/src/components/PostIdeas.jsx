@@ -11,12 +11,7 @@ const PostIdeas = () => {
     return (
         <div>
             <Container>
-                <Row>
-                    <div className="header">
-                        <h5>Arnald</h5>
-                        <h5>Salir</h5>
-                    </div>
-                </Row>
+               
                 <Row>
                     <Col>
                     </Col>
@@ -28,7 +23,7 @@ const PostIdeas = () => {
                                 style={{ height: '70px', width: '500px' }}
                             />
                             <Button type="submit" className="mb-2">
-                                TU IDEA!!!
+                                Tu idea!
                             </Button>
                         </Form>
                     </Col>
@@ -39,7 +34,6 @@ const PostIdeas = () => {
                     <div className="content">
                         <Card style={{ width: '47rem' }} bg="light">
                             <Card.Header>Arnaldo, Dijo: </Card.Header>
-
                             <Card.Body>
                                 <Card.Text>
                                     El que nada hace nada teme, a buen entendedor mañana por la mañana
