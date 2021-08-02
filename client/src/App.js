@@ -2,11 +2,26 @@
 import LoginRegistration from './components/LoginRegistration';
 import Nav from './components/Navbar'
 
+import {   BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
+import PostIdeas from './components/PostIdeas';
+
+
 function App() {
   return (
     <div className="App">    
-      <Nav /> 
-      <LoginRegistration />
+    <Router>
+        <Nav /> 
+      <Switch>
+          <Route exact path="/">
+              <LoginRegistration />
+          </Route>
+          <Route exact path="/newIdeas">
+              <PostIdeas />
+          </Route>
+      </Switch>
+    </Router>
+    
+   
     </div>
   );
 }
