@@ -1,5 +1,7 @@
 import React from 'react'
 import { Container, Col, Row, Table, Card } from 'react-bootstrap'
+import { Link } from "react-router-dom";
+
 
 import '../styles/detaillsStyles.scss'
 
@@ -34,12 +36,15 @@ const DetaillsIdeas = () => {
                             </thead>
                             <tbody>
                                 <tr>                                
-                                    <td>Mark</td>
+                                    <td>
+                                        <Link to="profile">
+                                            Pepito
+                                        </Link>
+                                    </td>
                                     <td>Otto</td>                               
                                 </tr>                            
                             </tbody>
                         </Table>   
-
                     </Col>
                         <Col>
                         </Col>                                   
