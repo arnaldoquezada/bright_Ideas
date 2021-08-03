@@ -7,7 +7,6 @@ module.exports.findAllIdeas = (req, res) => {
 }
 
 module.exports.createNewIdea = (req, res) => {
-    //console.log('llegue aqui',req.body);
     Ideas.create(req.body)
     .then(newIdea => res.send({idea: newIdea}))
     .catch(err => res.send({errors: err}));
