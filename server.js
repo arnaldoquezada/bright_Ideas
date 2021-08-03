@@ -10,7 +10,7 @@ app.use(morgan('dev'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-require('./server/routes/pirates.routes')(app);
+require('./server/routes/ideas.routes')(app);
 app.use('/api/user', require('./server/routes/user.routes'));
 
 app.listen(8000, () => {
