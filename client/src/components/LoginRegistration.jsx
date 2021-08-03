@@ -16,7 +16,7 @@ const LoginRegistration = () => {
 
     return (
         <div>
-            <Container>
+            <Container className="fondo-general">
                 <h1 className="subTitulos">Bienvenidos!!!</h1>
 
                 <Row>
