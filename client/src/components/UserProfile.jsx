@@ -17,7 +17,7 @@ const UserProfile = () => {
                                 <Card.Title>Alias:</Card.Title>
                                 <Card.Title>Email:</Card.Title>
                                 <Card.Text>
-                                    <p>Total Number of Posts:  </p>                               
+                                    Total Number of Posts:                            
                                 </Card.Text>
                                 <Card.Text>
                                     Total Number of Likes:                                    
