@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Navbar, Container } from 'react-bootstrap'
 
 const Nav = () => {
-
+   
     return (
         <div>
             <Navbar>
@@ -13,7 +13,7 @@ const Nav = () => {
                     <Link to="/">
                             Inicio
                         </Link>
-                    </Navbar.Brand>
+                    </Navbar.Brand>                   
                     <Navbar.Brand>
                         <Link to="/newIdeas">
                             Ideas

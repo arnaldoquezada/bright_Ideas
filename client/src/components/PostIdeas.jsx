@@ -1,17 +1,18 @@
 import React from 'react'
-import { Container, Col, Row, Button, Form, Card, CardDeck } from 'react-bootstrap'
+import { Container, Col, Row, Button, Form, Card } from 'react-bootstrap'
 import '../styles/ideasStyles.scss'
 import { FaThumbsUp } from 'react-icons/fa';
 import { BsFillXCircleFill } from "react-icons/bs";
 
+import { Link } from "react-router-dom";
+
+
 
 
 const PostIdeas = () => {
-
     return (
         <div>
             <Container>
-               
                 <Row>
                     <Col>
                     </Col>
@@ -45,7 +46,10 @@ const PostIdeas = () => {
                                 </Card.Link>
                                 <Card.Link>
                                     <small className="text-muted text-space">
+                                        <Link to="/detaills">
                                         31 personas <cite title="Source Title">Les gusta esto</cite>
+                                        </Link>
+                                        
                                     </small>
                                 </Card.Link>
                                 <Card.Link>
@@ -57,9 +61,7 @@ const PostIdeas = () => {
                         </Card>
                     </div>
                 </Row>
-
             </Container>
-
         </div>
     )
 }

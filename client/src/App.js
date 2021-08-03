@@ -1,9 +1,11 @@
 
 import LoginRegistration from './components/LoginRegistration';
+
 import Nav from './components/Navbar'
 
 import {   BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
 import PostIdeas from './components/PostIdeas';
+import DetaillsIdeas from './components/DetaillsIdeas';
 
 
 function App() {
@@ -17,6 +19,9 @@ function App() {
           </Route>
           <Route exact path="/newIdeas">
               <PostIdeas />
+          </Route>
+          <Route exact path="/detaills">
+              <DetaillsIdeas />
           </Route>
       </Switch>
     </Router>
