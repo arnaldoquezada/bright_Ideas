@@ -6,6 +6,7 @@ import Nav from './components/Navbar'
 import {   BrowserRouter as Router,  Switch,  Route } from "react-router-dom";
 import PostIdeas from './components/PostIdeas';
 import DetaillsIdeas from './components/DetaillsIdeas';
+import UserProfile from './components/UserProfile';
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route exact path="/detaills">
               <DetaillsIdeas />
+          </Route>
+          <Route exact path="/profile">
+              <UserProfile />
           </Route>
       </Switch>
     </Router>

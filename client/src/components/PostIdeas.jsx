@@ -6,9 +6,6 @@ import { BsFillXCircleFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 
-
-
-
 const PostIdeas = () => {
     return (
         <div>
