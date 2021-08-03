@@ -7,6 +7,7 @@ const UserProfile = () => {
 
     return (
         <div>
+            
             <Container>
                 <Row>                    
                     <Col>
@@ -27,6 +28,7 @@ const UserProfile = () => {
                     </Col>                    
                 </Row>
             </Container>
+           
         </div>
 
     )

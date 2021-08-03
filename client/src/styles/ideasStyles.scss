@@ -17,7 +17,8 @@
         height: 40px;
         width: 120px;
         margin-left: 10px;
-        margin-top: 1.5rem;
+        margin-top: 1rem;
+        text-align: center;
     }
 }
 .ideas-list{
@@ -31,10 +32,16 @@
 .content{
         display: flex;
         flex-direction: col;
-        margin-left: 7rem;
+        margin-left: 21rem;
         align-content: center;
+        margin-bottom: 25px;
 
     }
 .text-space{
     margin-right: 5rem;
+}
+
+.fondo{
+    background: linear-gradient(to right, rgba(255,255,255,0) 20%,
+    rgba(255,255,255,1)), url(https://cdn.pixabay.com/photo/2021/01/20/08/50/brainstorm-5933480_960_720.jpg);
 }

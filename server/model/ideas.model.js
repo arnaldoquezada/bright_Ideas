@@ -10,10 +10,7 @@ const IdeasSchema = new mongoose.Schema({
         minLength: [10, 'Debe ingresar un comentario con minimo de 10 carácteres '],
         maxLength: [150, 'No debe exeder los 150 carácteres']
     },
-    likes: {
-        type: Number,
-        default: [0]
-    },  
+    likes:[]       
 })
 
 const Ideas = mongoose.model('Ideas', IdeasSchema);
