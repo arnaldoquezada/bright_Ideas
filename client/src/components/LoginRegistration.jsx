@@ -1,18 +1,48 @@
 import React, { useState } from 'react'
 import { Container, Col, Row, Button, Form } from 'react-bootstrap'
 import '../styles/loginStyles.scss'
+import servicesIdeas from '../services/ideasServices'
 
 const LoginRegistration = () => {
+
+    const servicioIdeas = new servicesIdeas();
 
     const initialState = {
         name: "",
         alias: "",
         email: "",
         password: "",
-        confirmPassword: "",       
       };
 
       const [userForm , setUserForm] = useState(initialState);
+
+      const [isLogin, setIsLogin] = useState(true);
+
+      const loginUser = async (e) => {
+          console.log(userForm)
+        try {
+            const login = await servicioIdeas.registerUser(userForm);
+            console.log("datos:",login.message)
+            if(login===null){
+                console.log("nuLO")
+            }else{
+                console.log("No nulo")
+            }
+
+        } catch (err) {
+            console.log("error catch: ", err)
+            return err;
+        }
+    }
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        loginUser();
+      };
+    
+    const handleChange = (e) => {
+        console.log("TextBox valor: ", userForm.name, userForm.alias, userForm.email, userForm.password);
+        setUserForm({ ...userForm, [e.target.name]: e.target.value });
+      };
 
     return (
         <div>
@@ -23,21 +53,31 @@ const LoginRegistration = () => {
                     <Col>
                         <h3 className="subTitulos">Registro</h3>
                         <div className="contenedor">
-                            <Form>
+                            <form onSubmit={onSubmitHandler}>
                                 <Form.Label>Nombre</Form.Label>
-                                <Form.Control type="text" placeholder="Nombre" required/>
+                                <Form.Control type="text" placeholder="Nombre" required name="name"
+                                     onChange={handleChange}
+                                />
                                 <Form.Label>Alias</Form.Label>
-                                <Form.Control type="text" placeholder="Alias" required/>
+                                <Form.Control type="text" placeholder="Alias" required name="alias" 
+                                    onChange={handleChange}
+                                />
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control className="inputs" type="email" placeholder="Ingrese email" required />
+                                <Form.Control className="inputs" type="email" placeholder="Ingrese email" required name="email" 
+                                    onChange={handleChange}
+                                />
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control className="inputs" type="password" placeholder="Password" required/>
+                                <Form.Control className="inputs" type="password" placeholder="Password" required name="password" 
+                                    onChange={handleChange}
+                                />
                                 <Form.Label>Confirme password</Form.Label>
-                                <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required />
+                                <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required
+                                    
+                                />
                                 <Button type="submit" className="mb-2 boton-reg">
                                     REGISTRARSE
                                 </Button>
-                            </Form>
+                            </form>
                         </div>
                     </Col>
                     <Col>

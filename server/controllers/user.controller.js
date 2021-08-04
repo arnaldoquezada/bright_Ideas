@@ -6,7 +6,7 @@ module.exports.registerUser = (req, res) => {
     console.log("🚀 ~ file: user.controller.js ~ line 5 ~ req.body", req.body)
     User.create(req.body)
     .then(newUser => res.send({user: newUser}))
-    .catch(err => res.send({errors: err}));
+    .catch(err => {res.json(err)});
 };
 
 module.exports.loginUser = (req, res) => {
