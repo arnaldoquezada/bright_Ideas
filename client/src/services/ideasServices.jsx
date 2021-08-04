@@ -55,9 +55,17 @@ export default class IdeasService {
     async registerUser(user) {
         try {
             const response = await axios.post('http://localhost:8000/api/users/new', user);
-            return response.data.user;
+            console.log("data:",response.data)
+            if(response.data.name===""){
+                console.log("No Existe")
+            }if(response.data.errors._message!=="User validation failed"){
+                console.log("Existe")
+            }else{
+                console.log("No Existe")
+            }
 
         } catch(err) {
+            console.log("",err)
             return err;
         }
     }

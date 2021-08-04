@@ -3,12 +3,12 @@ var uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-    firstName: {
+    name: {
         type: String,
         //unique: [true, "Email ya existe, intente con uno diferente"],
         required: [true, "Este campo es requerido"]        
     },
-    lastName: {
+    alias: {
        type: String,
        required: [true, "Este campo es requerido"]
     },

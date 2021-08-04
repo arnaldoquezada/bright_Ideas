@@ -10,8 +10,13 @@ app.use(morgan('dev'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-require('./server/routes/ideas.routes')(app);
-app.use('/api/user', require('./server/routes/user.routes'));
+const allMyIdeasRoutes = require('./server/routes/ideas.routes');
+const userRoutes = require('./server/routes/user.routes');
+userRoutes(app);
+allMyIdeasRoutes(app);
+
+// require('./server/routes/ideas.routes')(app);
+// app.use('/api/user', require('./server/routes/user.routes'));
 
 app.listen(8000, () => {
     console.log("Listening at Port 8000")
