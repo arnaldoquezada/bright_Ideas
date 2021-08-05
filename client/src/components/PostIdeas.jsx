@@ -14,6 +14,7 @@ const PostIdeas = () => {
 
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
+  const [user , setUser] = useState("userName")
 
   const InitialState = {
     alias: "",
@@ -56,7 +57,20 @@ const PostIdeas = () => {
     }
   };
 
-  const addLike = () => {
+  const addLike = async (idea) => {
+
+    const likeExiste = idea.likes.find(element => element === user);
+    console.log("User:", user)
+    console.log("likeExiste:", likeExiste)
+    console.log("Idea:", idea)
+
+    if(!likeExiste){
+      const newLike = idea.likes.push(user)  
+      const updateLikes = await servicioIdeas.updateIdea(idea._id, {...idea, likes:newLike})
+      traerTodasLasIdeas()
+    }
+
+
   
 }
 const eliminarIdea = async (idx) => {
@@ -125,7 +139,7 @@ const eliminarIdea = async (idx) => {
                         </Card.Text>
                       <Card.Link>
                         <Button variant="primary"
-                          onClick={()=>addLike()}
+                          onClick={()=>addLike(ideas)}
                         >
                         
                           <FaThumbsUp /> Like

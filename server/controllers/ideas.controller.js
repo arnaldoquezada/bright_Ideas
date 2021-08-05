@@ -20,7 +20,10 @@ module.exports.getIdeaByID = (req, res) => {
 
 module.exports.updateIdea = (req, res) => {
     Ideas.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
-    .then(updatedIdea => res.json({idea: updatedIdea}))
+    .then(updatedIdea => {
+        console.log(updatedIdea)
+        return res.json({idea: updatedIdea})
+    })
     .catch(err => res.status(404).json(err));
 }
 
