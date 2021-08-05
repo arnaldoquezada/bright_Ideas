@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Col, Row, Table, Card } from 'react-bootstrap'
 import { Link } from "react-router-dom";
-
+import IdeaService from "../services/ideasServices";
 
 import '../styles/detaillsStyles.scss'
 
@@ -37,9 +37,9 @@ const DetaillsIdeas = () => {
                             <tbody>
                                 <tr>                                
                                     <td>
-                                        <Link to="profile">
+                                        {/* <Link to={`/profile/detaills/${p._id}`}>
                                             Pepito
-                                        </Link>
+                                        </Link> */}
                                     </td>
                                     <td>Otto</td>                               
                                 </tr>                            

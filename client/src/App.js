@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/detaills">
               <DetaillsIdeas />
           </Route>
-          <Route exact path="/profile">
+          <Route exact path="/profile/detaills/:id">
               <UserProfile />
           </Route>
       </Switch>
