@@ -13,10 +13,11 @@ const PostIdeas = () => {
 
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
+
   const InitialState = {
     alias: "",
     texto: "",
-    likes: [{ alias: "", numLikes: 0 }],
+    likes:[]
   };
 
   //En este state recibiremos todos las ideas desde la base de datos para luego mostrarlas
@@ -29,6 +30,8 @@ const PostIdeas = () => {
   const crearNuevaIdea = async (e) => {
     try {
       const Newidea = await servicioIdeas.createNewIdea(idea);
+      traerTodasLasIdeas();
+      setIdea({ ...idea, texto: "" }); 
        } catch (error) {
       return error;
     }
@@ -45,26 +48,31 @@ const PostIdeas = () => {
     }
   };
 
-  const addLike = async (e) => {
-    try {
-        const updatedLikes = await servicioIdeas.updateIdea(id, idea)
-        console.log("UpdatedLikes", updatedLikes)
-        setIdea({ ...idea, likes: updatedLikes.likes })
-    } catch (err) {
-        return err;
+  const addLike = () => {
+  
+}
+const eliminarIdea = async (idx) => {
+  console.log(idx)
+  try{
+      const eliminarIdea = servicioIdeas.deleteIdea(idx) 
+      traerTodasLasIdeas()
+
+    }catch(err){
+      return err;
     }
+    console.log("resultado eliminar", eliminarIdea)
 }
 
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     crearNuevaIdea();
-    setIdea({ ...idea, texto: "" });    
-    traerTodasLasIdeas();
+      
+    
   };
 
   const handleChange = (e) => {
-    setIdea({ ...idea, [e.target.name]: e.target.value }); 
+    setIdea({ ...idea, [e.target.name]: e.target.value, alias:idea.alias }); 
   };
 
   useEffect(() => {
@@ -97,13 +105,12 @@ const PostIdeas = () => {
           <Col></Col>
         </Row>
         <Row>
-          {console.log("Esto llego del servicio",misIdeas)}
           {misIdeas.length > 0
             ? misIdeas.map((ideas, idx) => (
              
                 <div className="content" key="idx">
                   <Card style={{ width: "35rem" }} bg="light">
-                    <Card.Header>Arnaldo, Dijo: </Card.Header>
+                    <Card.Header>{ ideas.alias }, Dijo: </Card.Header>
                     <Card.Body>
                       <Card.Text>
                         <Link to={`/idea/detaills/${ideas._id}`}>
@@ -111,7 +118,9 @@ const PostIdeas = () => {
                         </Link>
                         </Card.Text>
                       <Card.Link>
-                        <Button variant="primary">
+                        <Button variant="primary"
+                          onClick={()=>addLike()}
+                        >
                         
                           <FaThumbsUp /> Like
                         </Button>
@@ -119,13 +128,15 @@ const PostIdeas = () => {
                       <Card.Link>
                         <small className="text-muted text-space">
                           <Link to="/detaills">
-                          {ideas.likes.map(num=>(num.numLikes))} personas
+                          {ideas.likes.length} personas
                             <cite title="Source Title"> Les gusta esto</cite>
                           </Link>
                         </small>
                       </Card.Link>
                       <Card.Link>
-                        <Button variant="danger">
+                        <Button variant="danger"
+                          onClick={() => eliminarIdea(ideas._id) }
+                        >
                           <BsFillXCircleFill /> Eliminar
                         </Button>
                       </Card.Link>

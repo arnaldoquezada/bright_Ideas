@@ -33,7 +33,7 @@ const DetaillsIdeas = () => {
                 <Row>
                     <div className="content">
                         <Card style={{ width: '35rem' }} bg="light">
-                            <Card.Header>Arnaldo, Dijo: </Card.Header>
+                            <Card.Header>{idea.alias}</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     { idea.texto }
