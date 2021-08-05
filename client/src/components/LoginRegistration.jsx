@@ -25,18 +25,8 @@ const LoginRegistration = () => {
       const registerUser = async (e) => {
           console.log(userForm)
         try {
-            const register = await servicioIdeas.registerUser(userForm);
-            console.log("datos:",register.message)
-            if (register){
-                setShow(true);
-                setSucessMessage('Usuario registrado exitosamente, ahora puede logearse con sus credenciales');
-                
-            }
-            // if(register===null){
-            //     console.log("nuLO")
-            // }else{
-            //     console.log("No nulo")
-            // }
+            const login = await servicioIdeas.registerUser(userForm);
+            
 
         } catch (err) {
             console.log("error catch: ", err)

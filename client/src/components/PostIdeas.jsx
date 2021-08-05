@@ -5,13 +5,14 @@ import { FaThumbsUp } from "react-icons/fa";
 
 import { BsFillXCircleFill, BsFillBrightnessHighFill } from "react-icons/bs";
 import IdeaServices from "../services/ideasServices";
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import IdeaService from "../services/ideasServices";
+
 
 const PostIdeas = () => {
 
   const servicioIdeas = new IdeaService();
-
+  const { id } = useParams()
   const InitialState = {
     alias: "",
     texto: "",
@@ -44,6 +45,15 @@ const PostIdeas = () => {
     }
   };
 
+  const addLike = async (e) => {
+    try {
+        const updatedLikes = await servicioIdeas.updateIdea(id, idea)
+        console.log("UpdatedLikes", updatedLikes)
+        setIdea({ ...idea, likes: updatedLikes.likes })
+    } catch (err) {
+        return err;
+    }
+}
 
 
   const onSubmitHandler = (e) => {
@@ -54,9 +64,7 @@ const PostIdeas = () => {
   };
 
   const handleChange = (e) => {
-    // console.log("TextBox valor: ", idea.texto, idea.likes.numLikes);
-    setIdea({ ...idea, [e.target.name]: e.target.value });
- 
+    setIdea({ ...idea, [e.target.name]: e.target.value }); 
   };
 
   useEffect(() => {
@@ -97,16 +105,21 @@ const PostIdeas = () => {
                   <Card style={{ width: "35rem" }} bg="light">
                     <Card.Header>Arnaldo, Dijo: </Card.Header>
                     <Card.Body>
-                      <Card.Text>{ideas.texto}</Card.Text>
+                      <Card.Text>
+                        <Link to={`/idea/detaills/${ideas._id}`}>
+                          <p>{ideas.texto}</p> 
+                        </Link>
+                        </Card.Text>
                       <Card.Link>
                         <Button variant="primary">
+                        
                           <FaThumbsUp /> Like
                         </Button>
                       </Card.Link>
                       <Card.Link>
                         <small className="text-muted text-space">
                           <Link to="/detaills">
-                          {ideas.likes.length} personas
+                          {ideas.likes.map(num=>(num.numLikes))} personas
                             <cite title="Source Title"> Les gusta esto</cite>
                           </Link>
                         </small>
