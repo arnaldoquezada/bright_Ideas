@@ -14,6 +14,6 @@ module.exports.createNewIdea = (req, res) => {
 
 module.exports.getIdeaByID = (req, res) => {
     Ideas.findById(req.params.id)
-    .then(singleIdea => res.json({ideaData: singleIdea}))
-    .catch(error => res.json({ideaData: null}));
+    .then(singleIdea => res.json({idea: singleIdea}))
+    .catch(error => res.json({idea: null}));
 }

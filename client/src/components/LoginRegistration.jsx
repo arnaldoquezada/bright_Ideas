@@ -22,12 +22,7 @@ const LoginRegistration = () => {
           console.log(userForm)
         try {
             const login = await servicioIdeas.registerUser(userForm);
-            console.log("datos:",login.message)
-            if(login===null){
-                console.log("nuLO")
-            }else{
-                console.log("No nulo")
-            }
+            
 
         } catch (err) {
             console.log("error catch: ", err)
