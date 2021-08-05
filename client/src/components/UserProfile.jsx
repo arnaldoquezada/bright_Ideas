@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Col, Row, Card } from 'react-bootstrap'
-import { Link, useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import servicesIdeas from '../services/ideasServices'
 import { useParams } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const UserProfile = () => {
     const servicioIdeas = new servicesIdeas();
     const { id } = useParams()
     const [user, setUser] =  useState({})
-    const history = useHistory();
+    // const history = useHistory();
 
     const getUserfromService = async () => {
         try{

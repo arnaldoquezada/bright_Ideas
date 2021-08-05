@@ -17,3 +17,15 @@ module.exports.getIdeaByID = (req, res) => {
     .then(singleIdea => res.json({idea: singleIdea}))
     .catch(error => res.json({idea: null}));
 }
+
+module.exports.updateIdea = (req, res) => {
+    Ideas.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    .then(updatedIdea => res.json({idea: updatedIdea}))
+    .catch(err => res.status(404).json(err));
+}
+
+module.exports.deleteIdea = (req, res) => {
+    Ideas.deleteOne({_id: req.params.id})
+    .then(response => res.json({response: response}))
+    .catch(err => res.json(err))
+}
