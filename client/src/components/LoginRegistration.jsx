@@ -3,6 +3,7 @@ import { Container, Col, Row, Button, Form, Alert } from 'react-bootstrap'
 import '../styles/loginStyles.scss'
 import servicesIdeas from '../services/ideasServices'
 
+
 const LoginRegistration = () => {
 
     const servicioIdeas = new servicesIdeas();
