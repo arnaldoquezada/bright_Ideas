@@ -22,50 +22,42 @@ module.exports.findAllUser = (req, res) => {
 }
 
 module.exports.loginUser = (req, res) => {
-    //Primero buscar usuario por email
+  //Primero buscar usuario por email
 
-    User.findOneAndUpdate({ email: req.body.email }, {isOnline: true}, {new: true})
-    .then(user => {
-      if (user === null) {
-
-
-
-
-
-
-
-
-        
-        res.json({ msg: "Usuario no existe" });
-      } else {
-          //Bcrypt compara la contraseña que viene en el body del request con la de la base de datos
-        bcrypt
-          .compare(req.body.password, user.password)
-          .then(passwordIsValid => {
-          console.log("🚀 ~ file: user.controller.js ~ line 23 ~ passwordIsValid", passwordIsValid)
-            if (passwordIsValid) {
-                //Si la contraseña es válida genera el token
-              const newJWT = jwt.sign({
-                    _id: user._id
-              }, process.env.SECRET_KEY)
-              console.log("🚀 ~ file: user.controller.js ~ line 29 ~ newJWT", process.env.SECRET_KEY)
-              //Envía el token através de la cookie del response
-              return res
-                .cookie("usertoken", newJWT, process.env.SECRET_KEY, {
-                  httpOnly: true
-                })
-                .json({ msg: "Se ha logueado correctamente!" });
-            } else {
-              res.json({ msg: "Ups! Algo ha fallado en el login" });
-            }
-          })
-          .catch(err => {
-          console.log("🚀 ~ file: user.controller.js ~ line 41 ~ err", err)
-            return res.json({ msg: "Ups! Algo ha fallado en el login" })
-          });
-      }
-    })
-    .catch(err => res.json(err));
+  User.findOneAndUpdate({ email: req.body.email }, {isOnline: true}, {new: true})
+  .then(user => {
+    if (user === null) {
+      res.json({ msg: "Usuario no existe" });
+    } else {
+        //Bcrypt compara la contraseña que viene en el body del request con la de la base de datos
+      bcrypt
+        .compare(req.body.password, user.password)
+        .then(passwordIsValid => {
+        console.log("🚀 ~ file: user.controller.js ~ line 23 ~ passwordIsValid", passwordIsValid)
+          if (passwordIsValid) {
+              //Si la contraseña es válida genera el token
+            const newJWT = jwt.sign({
+                  _id: user._id
+            }, process.env.SECRET_KEY)
+           // console.log("🚀 ~ file: user.controller.js ~ line 29 ~ newJWT", process.env.SECRET_KEY)
+           console.log('newjwt', newJWT);
+            //Envía el token através de la cookie del response
+            return res
+              .cookie("usertoken", newJWT, process.env.SECRET_KEY, {
+                httpOnly: true
+              })
+              .json({ msg: "Se ha logueado correctamente!", authUser: user });
+          } else {
+            res.json({ msg: "Ups! Algo ha fallado en el login" });
+          }
+        })
+        .catch(err => {
+        console.log("error login", err)
+          return res.json({ msg: "Ups! Algo ha fallado en el login" })
+        });
+    }
+  })
+  .catch(err => res.json(err));
 }
 
 module.exports.logout = (req, res) => {
