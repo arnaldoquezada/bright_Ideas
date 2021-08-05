@@ -43,6 +43,8 @@ export default class IdeasService {
         }
     }
 
+ 
+
     async deleteIdea(id) {
         try{
             const deleteIdea = await axios.delete(`http://localhost:8000/api/ideas/delete/${id}`)
@@ -51,6 +53,7 @@ export default class IdeasService {
             return err;
         }
     }
+
 
     async registerUser(user) {
         try {
@@ -79,6 +82,15 @@ export default class IdeasService {
             return err;
         }
     }
+
+    async getOneSingleUser(id) {
+        try {
+            const user = await axios.get(`http://localhost:8000/api/users/${id}`)
+            return user.data;
+        } catch(err) {
+            return err;
+        }
+    };
 
 
 

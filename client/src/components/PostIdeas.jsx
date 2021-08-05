@@ -22,13 +22,13 @@ const PostIdeas = () => {
   const [misIdeas, setMisIdeas] = useState([]);
 
   //Aqui usaremos este state para crear las ideas y dejarlas en la base de datos
-  const [idea, setIdea] = useState(InitialState);
+  const [idea, setIdea] = useState({InitialState});
 
   //Función que crea una nueva idea en la base de datos
   const crearNuevaIdea = async (e) => {
     try {
       const Newidea = await servicioIdeas.createNewIdea(idea);
-    } catch (error) {
+       } catch (error) {
       return error;
     }
   };
@@ -38,20 +38,25 @@ const PostIdeas = () => {
     try {
       const todasMisIdeas = await servicioIdeas.getAllIdeas();
       setMisIdeas(todasMisIdeas);
+      
     } catch (error) {
       return error;
     }
   };
 
+
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     crearNuevaIdea();
+    setIdea({ ...idea, texto: "" });    
     traerTodasLasIdeas();
   };
 
   const handleChange = (e) => {
-    console.log("TextBox valor: ", idea.texto, idea.likes.numLikes);
+    // console.log("TextBox valor: ", idea.texto, idea.likes.numLikes);
     setIdea({ ...idea, [e.target.name]: e.target.value });
+ 
   };
 
   useEffect(() => {
@@ -66,9 +71,12 @@ const PostIdeas = () => {
           <Col>
             <form onSubmit={onSubmitHandler} className="form-container">
               <Form.Control
+                minLength="10"
+                required
                 as="textarea"
                 name="texto"
                 onChange={handleChange}
+                value={idea.texto}
                 placeholder="Dejanos tu super idea"
                 style={{ height: "60px", width: "500px" }}
               />
@@ -98,7 +106,7 @@ const PostIdeas = () => {
                       <Card.Link>
                         <small className="text-muted text-space">
                           <Link to="/detaills">
-                          {ideas.likes[0].numLikes} personas
+                          {ideas.likes.length} personas
                             <cite title="Source Title"> Les gusta esto</cite>
                           </Link>
                         </small>
