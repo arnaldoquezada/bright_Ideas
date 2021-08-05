@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Este campo es requerido"]
+    }, 
+    likes: {
+        type: Number,
+        default: 0
     }
 },
 {timestamps: true}

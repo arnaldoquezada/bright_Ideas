@@ -72,7 +72,7 @@ export default class IdeasService {
 
     async loginUser(user) {
         try {
-            const response = await axios.post('http://localhost:8000/api/users/login', user);
+            const response = await axios.post('http://localhost:8000/api/users/login', user, {withCredentials: true});
             return response.data.user;
 
         } catch(err) {

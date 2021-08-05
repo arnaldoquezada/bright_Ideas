@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Col, Row, Button, Form } from 'react-bootstrap'
+import { Container, Col, Row, Button, Form, Alert } from 'react-bootstrap'
 import '../styles/loginStyles.scss'
 import servicesIdeas from '../services/ideasServices'
 
@@ -15,19 +15,28 @@ const LoginRegistration = () => {
       };
 
       const [userForm , setUserForm] = useState(initialState);
+      const [error, setError] = useState('');
+      const [successMessage, setSucessMessage] = useState('');
+      
+      const [show, setShow] = useState(false);
 
       const [isLogin, setIsLogin] = useState(true);
 
-      const loginUser = async (e) => {
+      const registerUser = async (e) => {
           console.log(userForm)
         try {
-            const login = await servicioIdeas.registerUser(userForm);
-            console.log("datos:",login.message)
-            if(login===null){
-                console.log("nuLO")
-            }else{
-                console.log("No nulo")
+            const register = await servicioIdeas.registerUser(userForm);
+            console.log("datos:",register.message)
+            if (register){
+                setShow(true);
+                setSucessMessage('Usuario registrado exitosamente, ahora puede logearse con sus credenciales');
+                
             }
+            // if(register===null){
+            //     console.log("nuLO")
+            // }else{
+            //     console.log("No nulo")
+            // }
 
         } catch (err) {
             console.log("error catch: ", err)
@@ -36,24 +45,58 @@ const LoginRegistration = () => {
     }
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        loginUser();
+        registerUser();
       };
     
     const handleChange = (e) => {
+        
         console.log("TextBox valor: ", userForm.name, userForm.alias, userForm.email, userForm.password);
+        if (e.target.name === 'name') {
+            (e.target.value.length > 0 && e.target.value.length < 3) ? setError('* El nombre debe tener por lo menos 3 caracteres') : setError('')
+        } else if (e.target.name === 'alias') {
+            (e.target.value.length > 0 && e.target.value.length < 3) ? setError('* El alias debe tener por lo menos 3 caracteres') : setError('')
+        } else if (e.target.name === 'email') {
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            emailRegex.test(e.target.value) ? setError('') : setError('*Favor ingresar un correo en formato xxxx@xxxx.xxxx');
+        }else if (e.target.name==='password') {
+            (e.target.value.length >0 && e.target.value.length <8) ? setError('* El password debe tener al menos 8 caracteres') : setError('')
+        } 
+        else if (e.target.name === 'confirm') {
+            //console.log('entro acaaaa')
+            (userForm.password === e.target.value) ? setError('') : setError('* Los passwords no coinciden')
+        }
         setUserForm({ ...userForm, [e.target.name]: e.target.value });
       };
+
+      const cerrarAlerta = ()=>{
+        setShow(false);
+        document.getElementById("register-form").reset();
+
+      }
 
     return (
         <div>
             <Container className="fondo-general">
                 <h1 className="subTitulos">Bienvenidos!!!</h1>
-
+                
                 <Row>
                     <Col>
                         <h3 className="subTitulos">Registro</h3>
+                        {error!=='' && (
+                            <Alert variant="danger">
+                                {error}
+                            </Alert>
+                        )}
+                            <Alert show={show} variant="success">
+                                {successMessage}
+                                <div className="d-flex justify-content-center">
+                                    <Button onClick={() => cerrarAlerta()} variant="outline-success">
+                                        Cerrar
+                                    </Button>
+                                </div>
+                            </Alert>
                         <div className="contenedor">
-                            <form onSubmit={onSubmitHandler}>
+                            <form id="register-form" onSubmit={onSubmitHandler}>
                                 <Form.Label>Nombre</Form.Label>
                                 <Form.Control type="text" placeholder="Nombre" required name="name"
                                      onChange={handleChange}
@@ -71,12 +114,19 @@ const LoginRegistration = () => {
                                     onChange={handleChange}
                                 />
                                 <Form.Label>Confirme password</Form.Label>
-                                <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required
-                                    
+                                <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required name="confirm"
+                                    onChange={handleChange}
                                 />
-                                <Button type="submit" className="mb-2 boton-reg">
-                                    REGISTRARSE
-                                </Button>
+                                {error ?(
+                                    <Button type="submit" className="mb-2 boton-reg" disabled>
+                                        REGISTRARSE
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="mb-2 boton-reg">
+                                        REGISTRARSE
+                                    </Button>
+                                )}
+                                
                             </form>
                         </div>
                     </Col>
