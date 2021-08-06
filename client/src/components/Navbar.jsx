@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import { Navbar, Container } from 'react-bootstrap'
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
 
 const Nav = () => {
+    const { getItemFromLocalStorage } = useLocalStorage();
+    const alias = getItemFromLocalStorage('alias');
    
     return (
         <div>
@@ -22,7 +26,7 @@ const Nav = () => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Bienvenido: <a href="#login">Arnaldo</a>
+                            Bienvenido: {alias}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Container>

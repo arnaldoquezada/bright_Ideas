@@ -16,7 +16,28 @@ const LoginRegistration = () => {
         alias: "",
         email: "",
         password: "",
-        confirm: ""
+
+      };
+
+      const [userForm , setUserForm] = useState(initialState);
+      
+      const [userLogin , setUserLogin] = useState({
+          email_login: "",
+          password_login: "",
+      });
+      const [error, setError] = useState('');
+      const [errorLogin, setErrorLogin] = useState('');
+      const [successMessage, setSucessMessage] = useState('');
+      
+      const [show, setShow] = useState(false);
+      const [showLogin, setShowLogin] = useState(false);
+
+      const [isLogin, setIsLogin] = useState(true);
+      const {setItemFromLocalStorage} = useLocalStorage();
+
+      const registerUser = async (e) => {
+          console.log(userForm)
+
     };
 
     const [userForm, setUserForm] = useState(initialState);
@@ -38,12 +59,14 @@ const LoginRegistration = () => {
 
     const registerUser = async (e) => {
         console.log(userForm)
-        try {
 
+        try {
             const register = await servicioIdeas.registerUser(userForm);
-            console.log("datos:", register.message)
-            if (register) {
-                setShowLogin(true);
+
+            console.log("datos:",register.message)
+            if (register){
+                setShow(true);
+
                 setSucessMessage('Usuario registrado exitosamente, ahora puede logearse con sus credenciales');
 
             }
@@ -52,7 +75,6 @@ const LoginRegistration = () => {
             // }else{
             //     console.log("No nulo")
             // }
-
 
         } catch (err) {
             console.log("error catch: ", err)
@@ -89,13 +111,15 @@ const LoginRegistration = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         registerUser();
-        setUserForm({ ...userForm, name: "", alias: "", email: "", password: "", confirm: "" });
-    };
 
+      };
 
-    const onLoginHandler = (e) => {
+      const onLoginHandler = (e) => {
         e.preventDefault();
         loginUser();
+      };
+
+        setUserForm({ ...userForm, name: "", alias: "", email: "", password: "", confirm: "" });
     };
 
 
@@ -137,7 +161,8 @@ const LoginRegistration = () => {
         setShow(false);
         document.getElementById("register-form").reset();
 
-    }
+
+      }
 
 
     return (
@@ -164,24 +189,26 @@ const LoginRegistration = () => {
                         <div className="contenedor">
                             <form id="register-form" onSubmit={onSubmitHandler}>
                                 <Form.Label>Nombre</Form.Label>
-                                <Form.Control type="text" placeholder="Nombre" required name="name" value={userForm.name}
-                                    onChange={handleChange}
+
+                                <Form.Control type="text" placeholder="Nombre" required name="name"
+                                     onChange={handleChange}
                                 />
                                 <Form.Label>Alias</Form.Label>
-                                <Form.Control type="text" placeholder="Alias" required name="alias"
-                                    onChange={handleChange} value={userForm.alias}
+                                <Form.Control type="text" placeholder="Alias" required name="alias" 
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control className="inputs" type="email" placeholder="Ingrese email" required name="email"
-                                    onChange={handleChange} value={userForm.email}
+                                <Form.Control className="inputs" type="email" placeholder="Ingrese email" required name="email" 
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control className="inputs" type="password" placeholder="Password" required name="password"
-                                    onChange={handleChange} value={userForm.password}
+                                <Form.Control className="inputs" type="password" placeholder="Password" required name="password" 
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Confirme password</Form.Label>
                                 <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required name="confirm"
-                                    onChange={handleChange} value={userForm.confirm}
+                                    onChange={handleChange}
+
                                 />
                                 {error ? (
                                     <Button type="submit" className="mb-2 boton-reg" disabled>
