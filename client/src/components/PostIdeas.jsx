@@ -14,22 +14,31 @@ const PostIdeas = () => {
 
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
-  const [user , setUser] = useState("userName")
+  // const [user , setUser] = useState("Carito")
 
-  const InitialState = {
-    alias: "",
-    texto: "",
-    likes:[]
-  };
+  // const InitialState = {
+  //   alias: "",
+  //   texto: "",
+  //   likes:[]
+  // };
 
   //En este state recibiremos todos las ideas desde la base de datos para luego mostrarlas
   const [misIdeas, setMisIdeas] = useState([]);
 
   //Aqui usaremos este state para crear las ideas y dejarlas en la base de datos
-  const [idea, setIdea] = useState({InitialState});
+  // const [idea, setIdea] = useState({
+  //   alias: InitialState.alias,
+  //   texto: InitialState.texto,
+  //   likes: InitialState.likes});
+  const [idea, setIdea] = useState({
+    alias: "",
+    texto: "",
+    likes: []
+  });
 
   //Función que crea una nueva idea en la base de datos
   const crearNuevaIdea = async (e) => {
+    console.log("🚀 ~ file: PostIdeas.jsx ~ line 35 ~ crearNuevaIdea ~ idea", idea)
     try {
       const Newidea = await servicioIdeas.createNewIdea(idea);
       traerTodasLasIdeas();
@@ -57,16 +66,19 @@ const PostIdeas = () => {
     }
   };
 
-  const addLike = async (idea) => {
-
-    const likeExiste = idea.likes.find(element => element === user);
+  const addLike = async (ideaToChange) => {
+    const { likes } = ideaToChange
+    const user = localStorage.getItem("alias")
+    const likeExiste = ideaToChange.likes.find(element => element === user);
     console.log("User:", user)
     console.log("likeExiste:", likeExiste)
     console.log("Idea:", idea)
-
+    
     if(!likeExiste){
-      const newLike = idea.likes.push(user)  
-      const updateLikes = await servicioIdeas.updateIdea(idea._id, {...idea, likes:newLike})
+      const newLike = [...ideaToChange.likes, user]
+      console.log("🚀 ~ file: PostIdeas.jsx ~ line 65 ~ addLike ~ ideaToChange", newLike)
+      const updateLikes = await servicioIdeas.updateIdea(ideaToChange._id, { ...ideaToChange, likes:newLike})
+      setIdea(ideaToChange)
       traerTodasLasIdeas()
     }
 
