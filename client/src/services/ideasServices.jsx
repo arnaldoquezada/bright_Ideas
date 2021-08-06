@@ -85,6 +85,17 @@ export default class IdeasService {
         }
     };
 
+    async getAllUsers() {
+        try {
+            const UsersList = await axios.get('http://localhost:8000/api/users');
+            console.log(UsersList)
+            return UsersList.data.users;
+
+        } catch (error) {
+            return error;
+        }
+    }
+
 
 
 };

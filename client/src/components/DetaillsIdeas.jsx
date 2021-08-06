@@ -12,8 +12,11 @@ const DetaillsIdeas = () => {
     const { id } = useParams()
     const servicioIdeas = new IdeaService();
     
-    console.log("Llego este ID",id)
-    const [idea, setIdea] = useState({})
+    const [idea, setIdea] = useState({
+        idea:'',
+        alias:'',
+        likes:[]
+    })
 
     const getOneSingleIdea = async () => {
         try{
@@ -26,6 +29,7 @@ const DetaillsIdeas = () => {
     }
     useEffect(() => {
         getOneSingleIdea();
+        
     },[])
 
     return (
@@ -33,7 +37,7 @@ const DetaillsIdeas = () => {
             <Container className="container-form fondo-back">
                 <Row>
                     <div className="content">
-                        {console.log("idea es:",idea)}
+                        {console.log("ideita",idea)}
                         <Card style={{ width: '35rem' }} bg="light">
                             <Card.Header>{idea.alias}</Card.Header>
                             <Card.Body>
@@ -54,31 +58,18 @@ const DetaillsIdeas = () => {
                                     <th>Nombre</th>
                                 </tr>
                             </thead>
-                            <tbody>   
-                                <tr>
-                                    <td>{
-                                            idea.likes.length
-                                            // idea.length > 0 ? (
-                                            //     idea.likes.map((item, idx) =>
-                                            //     {
-                                            //         <tr key={idx}>
-                                            //             <td>{item}</td>
-                                            //             <td></td>
-                                            //         </tr>
-                                                   
-                                            //     })
-                                            // ):("sin Likes")
-                                        }</td>
-                                    <td></td>
-                                </tr>                             
-                                {/* {
-                                    idea.length > 0 && idea.likes.map((item, idx) => (
+                            <tbody> 
+                            {
+                                idea.likes.length > 0 ? (
+                                    idea.likes.map((p, idx) =>
+                                    (
                                         <tr key={idx}>
-                                            <td></td>
-                                            <td>prueba</td>
+                                            <td>{p.alias}</td>
+                                            <td>{p.name}</td>                                        
                                         </tr>
                                     ))
-                                }                             */}
+                                ) : 'No hay likes aún'
+                            }                              
                             </tbody>
                         </Table>   
                     </Col>

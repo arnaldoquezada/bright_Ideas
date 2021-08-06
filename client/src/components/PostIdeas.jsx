@@ -14,6 +14,20 @@ const PostIdeas = () => {
   const user = localStorage.getItem("alias")
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
+  const [usuario, setUsuario]=useState([])
+
+  const getAllUsers = async () => {
+    try{
+        const allUsers = await servicioIdeas.getAllUsers();
+        console.log("allUsers:",allUsers)
+        const userLikes = allUsers.find(element =>element.alias === user)
+        console.log("usuarios dieron like:",userLikes)
+        setUsuario(userLikes)
+    }catch(err){
+        return err
+    }
+}
+
   const [buttonState, setButtonState]=useState(false)
   //En este state recibiremos todos las ideas desde la base de datos para luego mostrarlas
   const [misIdeas, setMisIdeas] = useState([]);
@@ -58,13 +72,13 @@ const PostIdeas = () => {
   const addLike = async (ideaToChange) => {
     const { likes } = ideaToChange
     const user = localStorage.getItem("alias")
-    const likeExiste = ideaToChange.likes.find(element => element === user);
+    const likeExiste = ideaToChange.likes.find(element => element.alias === usuario.alias);
     console.log("User:", user)
     console.log("likeExiste:", likeExiste)
     console.log("Idea:", idea)
     
     if(!likeExiste){
-      const newLike = [...ideaToChange.likes, user]
+      const newLike = [...ideaToChange.likes, usuario]
       console.log("🚀 ~ file: PostIdeas.jsx ~ line 65 ~ addLike ~ ideaToChange", newLike)
       const updateLikes = await servicioIdeas.updateIdea(ideaToChange._id, { ...ideaToChange, likes:newLike})
       setIdea(ideaToChange)
@@ -98,6 +112,7 @@ const eliminarIdea = async (idx) => {
 
   useEffect(() => {
     traerTodasLasIdeas();
+    getAllUsers();
   }, []);
 
   return (
@@ -128,7 +143,7 @@ const eliminarIdea = async (idx) => {
         <Row>
           {misIdeas.length > 0
             ? misIdeas.map((ideas, idx) => (
-             
+          
                 <div className="content" key="idx">
                   <Card style={{ width: "35rem" }} bg="light">
                     <Card.Header>{ ideas.alias }, Dijo: </Card.Header>
@@ -148,7 +163,7 @@ const eliminarIdea = async (idx) => {
                       </Card.Link>
                       <Card.Link>
                         <small className="text-muted text-space">
-                          <Link to="/detaills">
+                          <Link to={`/idea/detaills/${ideas._id}`}>
                           {ideas.likes.length} personas
                             <cite title="Source Title"> Les gusta esto</cite>
                           </Link>
@@ -157,7 +172,7 @@ const eliminarIdea = async (idx) => {
                       <Card.Link>
                         <Button variant="danger"
                           onClick={() => {eliminarIdea(ideas._id)}}
-                            disabled={ user===ideas.alias ?  false : true}                     >
+                            disabled={ user === ideas.alias ?  false : true}                     >
                           <BsFillXCircleFill /> Eliminar
                         </Button>
                       </Card.Link>
