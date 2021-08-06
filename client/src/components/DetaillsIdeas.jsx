@@ -54,14 +54,31 @@ const DetaillsIdeas = () => {
                                     <th>Nombre</th>
                                 </tr>
                             </thead>
-                            <tbody>                                
-                                {
-                                    idea.length > 0 && idea.likes.map((item) => (
-                                        <tr key={item._id} >
-                                            <td>{item.alias}</td>
+                            <tbody>   
+                                <tr>
+                                    <td>{
+                                            idea.likes.length
+                                            // idea.length > 0 ? (
+                                            //     idea.likes.map((item, idx) =>
+                                            //     {
+                                            //         <tr key={idx}>
+                                            //             <td>{item}</td>
+                                            //             <td></td>
+                                            //         </tr>
+                                                   
+                                            //     })
+                                            // ):("sin Likes")
+                                        }</td>
+                                    <td></td>
+                                </tr>                             
+                                {/* {
+                                    idea.length > 0 && idea.likes.map((item, idx) => (
+                                        <tr key={idx}>
+                                            <td></td>
+                                            <td>prueba</td>
                                         </tr>
                                     ))
-                                }                            
+                                }                             */}
                             </tbody>
                         </Table>   
                     </Col>
