@@ -12,14 +12,14 @@ module.exports.registerUser = (req, res) => {
 module.exports.loginUser = (req, res) => {
   //Primero buscar usuario por email
 
-  User.findOneAndUpdate({ email: req.body.email }, {isOnline: true}, {new: true})
+  User.findOneAndUpdate({ email: req.body.email_login }, {isOnline: true}, {new: true})
   .then(user => {
     if (user === null) {
       res.json({ msg: "Usuario no existe" });
     } else {
         //Bcrypt compara la contraseña que viene en el body del request con la de la base de datos
       bcrypt
-        .compare(req.body.password, user.password)
+        .compare(req.body.password_login, user.password)
         .then(passwordIsValid => {
         console.log("🚀 ~ file: user.controller.js ~ line 23 ~ passwordIsValid", passwordIsValid)
           if (passwordIsValid) {
