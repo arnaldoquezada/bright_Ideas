@@ -14,6 +14,18 @@ module.exports.createNewIdea = (req, res) => {
 
 module.exports.getIdeaByID = (req, res) => {
     Ideas.findById(req.params.id)
-    .then(singleIdea => res.json({ideaData: singleIdea}))
-    .catch(error => res.json({ideaData: null}));
+    .then(singleIdea => res.json({idea: singleIdea}))
+    .catch(error => res.json({idea: null}));
+}
+
+module.exports.updateIdea = (req, res) => {
+    Ideas.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    .then(updatedIdea => res.json({idea: updatedIdea}))
+    .catch(err => res.status(404).json(err));
+}
+
+module.exports.deleteIdea = (req, res) => {
+    Ideas.deleteOne({_id: req.params.id})
+    .then(response => res.json({response: response}))
+    .catch(err => res.json(err))
 }

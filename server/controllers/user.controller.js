@@ -9,6 +9,18 @@ module.exports.registerUser = (req, res) => {
     .catch(err => {res.json(err)});
 };
 
+module.exports.getUserByID = (req, res) => {
+  User.findById(req.params.id)
+  .then(singleUser => res.json({userData: singleUser}))
+  .catch(error => res.json({userData: null}));
+}
+
+module.exports.findAllUser = (req, res) => {
+  User.find()
+  .then(allUsers => res.json({users: allUsers}))
+  .catch(err => res.json({users:null}));
+}
+
 module.exports.loginUser = (req, res) => {
   //Primero buscar usuario por email
 

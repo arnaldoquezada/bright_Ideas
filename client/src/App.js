@@ -21,10 +21,10 @@ function App() {
           <Route exact path="/newIdeas">
               <PostIdeas />
           </Route>
-          <Route exact path="/detaills">
+          <Route exact path="/idea/detaills/:id">
               <DetaillsIdeas />
           </Route>
-          <Route exact path="/profile">
+          <Route exact path="/profile/detaills/:id">
               <UserProfile />
           </Route>
       </Switch>

@@ -41,28 +41,23 @@ export default class IdeasService {
         } catch(err) {
             return err;
         }
-    }
+    } 
 
     async deleteIdea(id) {
+        console.log("servicio:",id)
         try{
-            const deleteIdea = await axios.delete(`http://localhost:8000/api/ideas/delete/${id}`)
+            const deleteIdea = await axios.delete(`http://localhost:8000/api/idea/delete/${id}`)
             return deleteIdea.data.response;
         } catch(err) {
             return err;
         }
     }
 
+
     async registerUser(user) {
         try {
             const response = await axios.post('http://localhost:8000/api/users/new', user);
-            console.log("data:",response.data)
-            if(response.data.name===""){
-                console.log("No Existe")
-            }if(response.data.errors._message!=="User validation failed"){
-                console.log("Existe")
-            }else{
-                console.log("No Existe")
-            }
+            return response          
 
         } catch(err) {
             console.log("",err)
@@ -80,6 +75,15 @@ export default class IdeasService {
             return err;
         }
     }
+
+    async getOneSingleUser(id) {
+        try {
+            const user = await axios.get(`http://localhost:8000/api/users/${id}`)
+            return user.data;
+        } catch(err) {
+            return err;
+        }
+    };
 
 
 
