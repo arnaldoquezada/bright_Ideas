@@ -11,25 +11,14 @@ import Swal from 'sweetalert2'
 
 
 const PostIdeas = () => {
-
+  const user = localStorage.getItem("alias")
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
-  // const [user , setUser] = useState("Carito")
-
-  // const InitialState = {
-  //   alias: "",
-  //   texto: "",
-  //   likes:[]
-  // };
-
+  const [buttonState, setButtonState]=useState(false)
   //En este state recibiremos todos las ideas desde la base de datos para luego mostrarlas
   const [misIdeas, setMisIdeas] = useState([]);
 
   //Aqui usaremos este state para crear las ideas y dejarlas en la base de datos
-  // const [idea, setIdea] = useState({
-  //   alias: InitialState.alias,
-  //   texto: InitialState.texto,
-  //   likes: InitialState.likes});
   const [idea, setIdea] = useState({
     alias: "",
     texto: "",
@@ -104,7 +93,7 @@ const eliminarIdea = async (idx) => {
   };
 
   const handleChange = (e) => {
-    setIdea({ ...idea, [e.target.name]: e.target.value }); 
+    setIdea({ ...idea, [e.target.name]: e.target.value, alias:user }); 
   };
 
   useEffect(() => {
@@ -168,7 +157,7 @@ const eliminarIdea = async (idx) => {
                       <Card.Link>
                         <Button variant="danger"
                           onClick={() => {eliminarIdea(ideas._id)}}
-                        >
+                            disabled={ user===ideas.alias ?  false : true}                     >
                           <BsFillXCircleFill /> Eliminar
                         </Button>
                       </Card.Link>

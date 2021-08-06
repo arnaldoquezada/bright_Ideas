@@ -8,6 +8,7 @@ import '../styles/detaillsStyles.scss'
 
 
 const DetaillsIdeas = () => {
+
     const { id } = useParams()
     const servicioIdeas = new IdeaService();
     
@@ -32,6 +33,7 @@ const DetaillsIdeas = () => {
             <Container className="container-form fondo-back">
                 <Row>
                     <div className="content">
+                        {console.log("idea es:",idea)}
                         <Card style={{ width: '35rem' }} bg="light">
                             <Card.Header>{idea.alias}</Card.Header>
                             <Card.Body>
@@ -52,15 +54,14 @@ const DetaillsIdeas = () => {
                                     <th>Nombre</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>                                
-                                    <td>
-                                        {/* <Link to={`/profile/detaills/${p._id}`}>
-                                            Pepito
-                                        </Link> */}
-                                    </td>
-                                    <td>Otto</td>                               
-                                </tr>                            
+                            <tbody>                                
+                                {
+                                    idea.length > 0 && idea.likes.map((item) => (
+                                        <tr key={item._id} >
+                                            <td>{item.alias}</td>
+                                        </tr>
+                                    ))
+                                }                            
                             </tbody>
                         </Table>   
                     </Col>
