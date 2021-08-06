@@ -79,7 +79,7 @@ export default class IdeasService {
     async getOneSingleUser(id) {
         try {
             const user = await axios.get(`http://localhost:8000/api/users/${id}`)
-            return user.data;
+            return user.data.user;
         } catch(err) {
             return err;
         }

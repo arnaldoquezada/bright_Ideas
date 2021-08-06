@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Container, Col, Row, Card } from 'react-bootstrap'
 // import { useHistory } from "react-router-dom";
 import servicesIdeas from '../services/ideasServices'
-import { useParams } from "react-router-dom";
-
-
-
+import { useParams, useHistory } from "react-router-dom";
 
 
 const UserProfile = () => {
 
     const servicioIdeas = new servicesIdeas();
     const { id } = useParams()
-    const [user, setUser] =  useState({})
-    // const history = useHistory();
+    const [user, setUser] =  useState({
+        name:'',
+        alias:'',
+        email:''
+    })
+    const history = useHistory();
 
     const getUserfromService = async () => {
+        console.log("Id:",id)
         try{
             const oneUser = await servicioIdeas.getOneSingleUser(id)
-            console.log(id)
+            console.log(oneUser)
             setUser(oneUser)
         }catch (err){
             return err;
         }
     }
+    useEffect(() => {
+        getUserfromService()
+      }, []);
 
     return (
         <div>
@@ -34,9 +39,9 @@ const UserProfile = () => {
                         <Card style={{ width: '36rem' }}>
                             <Card.Header as="h5">Featured</Card.Header>
                             <Card.Body>
-                                <Card.Title>{user.name}:</Card.Title>
-                                <Card.Title>{user.alias}:</Card.Title>
-                                <Card.Title>{user.email}:</Card.Title>
+                                <Card.Title>Nombre: {user.name}</Card.Title>
+                                <Card.Title>Alias: {user.alias}:</Card.Title>
+                                <Card.Title>Email: {user.email}:</Card.Title>
                                 <Card.Text>
                                     Total Number of Posts:                            
                                 </Card.Text>

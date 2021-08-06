@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Col, Row, Table, Card } from 'react-bootstrap'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import IdeaService from "../services/ideasServices";
 
 import '../styles/detaillsStyles.scss'
@@ -64,8 +64,16 @@ const DetaillsIdeas = () => {
                                     idea.likes.map((p, idx) =>
                                     (
                                         <tr key={idx}>
-                                            <td>{p.alias}</td>
-                                            <td>{p.name}</td>                                        
+                                            <td>
+                                                <Link to={`/profile/detaills/${p._id}`}>
+                                                    {p.alias}
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link to={`/profile/detaills/${p._id}`}>
+                                                    {p.name}
+                                                </Link>
+                                            </td>                                      
                                         </tr>
                                     ))
                                 ) : 'No hay likes aún'

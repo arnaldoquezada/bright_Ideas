@@ -11,8 +11,8 @@ module.exports.registerUser = (req, res) => {
 
 module.exports.getUserByID = (req, res) => {
   User.findById(req.params.id)
-  .then(singleUser => res.json({userData: singleUser}))
-  .catch(error => res.json({userData: null}));
+  .then(singleUser => res.json({user: singleUser}))
+  .catch(error => res.json({user: null}));
 }
 
 module.exports.findAllUser = (req, res) => {
