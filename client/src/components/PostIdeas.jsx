@@ -2,36 +2,43 @@ import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Button, Form, Card } from "react-bootstrap";
 import "../styles/ideasStyles.scss";
 import { FaThumbsUp } from "react-icons/fa";
-
 import { BsFillXCircleFill, BsFillBrightnessHighFill } from "react-icons/bs";
 import IdeaServices from "../services/ideasServices";
 import { Link, useParams} from "react-router-dom";
 import IdeaService from "../services/ideasServices";
+import Swal from 'sweetalert2'
+
 
 
 const PostIdeas = () => {
-
+  const user = localStorage.getItem("alias")
   const servicioIdeas = new IdeaService();
   const { id } = useParams()
-
-  const InitialState = {
-    alias: "",
-    texto: "",
-    likes:[]
-  };
-
+  const [buttonState, setButtonState]=useState(false)
   //En este state recibiremos todos las ideas desde la base de datos para luego mostrarlas
   const [misIdeas, setMisIdeas] = useState([]);
 
   //Aqui usaremos este state para crear las ideas y dejarlas en la base de datos
-  const [idea, setIdea] = useState({InitialState});
+  const [idea, setIdea] = useState({
+    alias: "",
+    texto: "",
+    likes: []
+  });
 
   //Función que crea una nueva idea en la base de datos
   const crearNuevaIdea = async (e) => {
+    console.log("🚀 ~ file: PostIdeas.jsx ~ line 35 ~ crearNuevaIdea ~ idea", idea)
     try {
       const Newidea = await servicioIdeas.createNewIdea(idea);
       traerTodasLasIdeas();
       setIdea({ ...idea, texto: "" }); 
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Que buena idea!!!',
+        showConfirmButton: false,
+        timer: 1500
+      })
        } catch (error) {
       return error;
     }
@@ -48,15 +55,31 @@ const PostIdeas = () => {
     }
   };
 
-  const addLike = () => {
+  const addLike = async (ideaToChange) => {
+    const { likes } = ideaToChange
+    const user = localStorage.getItem("alias")
+    const likeExiste = ideaToChange.likes.find(element => element === user);
+    console.log("User:", user)
+    console.log("likeExiste:", likeExiste)
+    console.log("Idea:", idea)
+    
+    if(!likeExiste){
+      const newLike = [...ideaToChange.likes, user]
+      console.log("🚀 ~ file: PostIdeas.jsx ~ line 65 ~ addLike ~ ideaToChange", newLike)
+      const updateLikes = await servicioIdeas.updateIdea(ideaToChange._id, { ...ideaToChange, likes:newLike})
+      setIdea(ideaToChange)
+      traerTodasLasIdeas()
+    }
+
+
   
 }
 const eliminarIdea = async (idx) => {
   console.log(idx)
-  try{
-      const eliminarIdea = servicioIdeas.deleteIdea(idx) 
+  
+  try{  
+    const deleteIdea = servicioIdeas.deleteIdea(idx)
       traerTodasLasIdeas()
-
     }catch(err){
       return err;
     }
@@ -66,13 +89,11 @@ const eliminarIdea = async (idx) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    crearNuevaIdea();
-      
-    
+    crearNuevaIdea();    
   };
 
   const handleChange = (e) => {
-    setIdea({ ...idea, [e.target.name]: e.target.value, alias:idea.alias }); 
+    setIdea({ ...idea, [e.target.name]: e.target.value, alias:user }); 
   };
 
   useEffect(() => {
@@ -87,8 +108,8 @@ const eliminarIdea = async (idx) => {
           <Col>
             <form onSubmit={onSubmitHandler} className="form-container">
               <Form.Control
-                minLength="10"
                 required
+                minLength="10"
                 as="textarea"
                 name="texto"
                 onChange={handleChange}
@@ -119,7 +140,7 @@ const eliminarIdea = async (idx) => {
                         </Card.Text>
                       <Card.Link>
                         <Button variant="primary"
-                          onClick={()=>addLike()}
+                          onClick={()=>addLike(ideas)}
                         >
                         
                           <FaThumbsUp /> Like
@@ -135,8 +156,8 @@ const eliminarIdea = async (idx) => {
                       </Card.Link>
                       <Card.Link>
                         <Button variant="danger"
-                          onClick={() => eliminarIdea(ideas._id) }
-                        >
+                          onClick={() => {eliminarIdea(ideas._id)}}
+                            disabled={ user===ideas.alias ?  false : true}                     >
                           <BsFillXCircleFill /> Eliminar
                         </Button>
                       </Card.Link>

@@ -29,6 +29,7 @@
     "mongoose": "^5.13.5",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "sweetalert2": "^11.1.2"
   }
 }
