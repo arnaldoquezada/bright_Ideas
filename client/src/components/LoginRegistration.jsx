@@ -15,7 +15,6 @@ const LoginRegistration = () => {
         alias: "",
         email: "",
         password: "",
-        confirm:""
       };
 
       const [userForm , setUserForm] = useState(initialState);
@@ -37,11 +36,10 @@ const LoginRegistration = () => {
       const registerUser = async (e) => {
           console.log(userForm)
         try {
-
             const register = await servicioIdeas.registerUser(userForm);
             console.log("datos:",register.message)
             if (register){
-                setShowLogin(true);
+                setShow(true);
                 setSucessMessage('Usuario registrado exitosamente, ahora puede logearse con sus credenciales');
                 
             }
@@ -50,7 +48,6 @@ const LoginRegistration = () => {
             // }else{
             //     console.log("No nulo")
             // }
-
 
         } catch (err) {
             console.log("error catch: ", err)
@@ -87,15 +84,12 @@ const LoginRegistration = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         registerUser();
-        setUserForm({ ...userForm, name:"", alias:"", email:"", password:"", confirm:""});    
       };
-
 
       const onLoginHandler = (e) => {
         e.preventDefault();
         loginUser();
       };
-
     
     const handleChange = (e) => {
         
@@ -137,7 +131,6 @@ const LoginRegistration = () => {
         document.getElementById("register-form").reset();
 
       }
-     
 
     return (
         <div>
@@ -163,24 +156,24 @@ const LoginRegistration = () => {
                         <div className="contenedor">
                             <form id="register-form" onSubmit={onSubmitHandler}>
                                 <Form.Label>Nombre</Form.Label>
-                                <Form.Control type="text" placeholder="Nombre" required name="name" value={userForm.name}
+                                <Form.Control type="text" placeholder="Nombre" required name="name"
                                      onChange={handleChange}
                                 />
                                 <Form.Label>Alias</Form.Label>
                                 <Form.Control type="text" placeholder="Alias" required name="alias" 
-                                    onChange={handleChange} value={userForm.alias}
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control className="inputs" type="email" placeholder="Ingrese email" required name="email" 
-                                    onChange={handleChange} value={userForm.email}
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control className="inputs" type="password" placeholder="Password" required name="password" 
-                                    onChange={handleChange} value={userForm.password}
+                                    onChange={handleChange}
                                 />
                                 <Form.Label>Confirme password</Form.Label>
                                 <Form.Control className="inputs" type="password" placeholder="Confirmar Password" required name="confirm"
-                                    onChange={handleChange}  value={userForm.confirm}
+                                    onChange={handleChange}
                                 />
                                 {error ?(
                                     <Button type="submit" className="mb-2 boton-reg" disabled>
